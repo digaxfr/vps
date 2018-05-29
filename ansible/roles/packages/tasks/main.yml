@@ -1,0 +1,6 @@
+---
+- name: packages | install base and user packages
+  package:
+    name: "{{ item }}"
+    state: latest
+  with_items: "{{ pkg_list }}"

@@ -1,0 +1,31 @@
+---
+- name: users | add users
+  user:
+    append: yes
+    comment: "{{ item.comment }}"
+    create_home: yes
+    groups: "{{ item.groups | default(omit) }}"
+    home: "/home/{{ item.name }}"
+    name: "{{ item.name }}"
+    shell: "{{ item.shell | default('/bin/bash') }}"
+    state: present
+    uid: "{{ item.uid }}"
+  with_items: "{{ users }}"
+
+- name: users | ensure ssh directory exists
+  file:
+    path: "/home/{{ item.name }}/.ssh"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: 0700
+    state: directory
+  with_items: "{{ users }}"
+
+- name: users | generate ssh authorized keys
+  template:
+    src: authorized_keys.j2
+    dest: "/home/{{ item.name }}/.ssh/authorized_keys"
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: 0600
+  with_items: "{{ users }}"

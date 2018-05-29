@@ -1,0 +1,6 @@
+---
+- name: "iptables | restart iptables"
+  systemd:
+    name: iptables
+    state: reloaded
+    enabled: yes

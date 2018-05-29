@@ -1,0 +1,7 @@
+*.swp
+*~
+ansible.log
+*.retry
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/

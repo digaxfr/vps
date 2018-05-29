@@ -1,0 +1,14 @@
+---
+- name: sshd | ensure certain configs are set
+  lineinfile:
+    path: /etc/ssh/sshd_config
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    backrefs: yes
+    state: present
+  notify: "sshd | restart sshd"
+  with_items:
+    - regexp: "^PermitRootLogin.*"
+      line: "PermitRootLogin no"
+    - regexp: "^PasswordAuthentication.*"
+      line: "PasswordAuthentication no"

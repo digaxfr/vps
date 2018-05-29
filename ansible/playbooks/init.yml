@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: yes
+  roles:
+    - role: disks
+      tags: disks
+    - role: packages
+      tags: packages
+    - role: iptables
+      tags: iptables
+    - role: sshd
+      tags: sshd
+    - role: users
+      tags: users

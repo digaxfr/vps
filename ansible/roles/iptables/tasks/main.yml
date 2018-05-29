@@ -1,0 +1,27 @@
+---
+- name: iptables | install iptables
+  package:
+    name: iptables-services
+    state: latest
+
+- name: iptables | disable firewalld
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: no
+  ignore_errors: yes
+
+- name: iptables | template rules
+  template:
+    src: iptables.j2
+    dest: /etc/sysconfig/iptables
+    owner: root
+    group: root
+    mode: 0600
+  notify: "iptables | restart iptables"
+
+- name: iptables | enable iptables
+  systemd:
+    name: iptables
+    enabled: yes
+    state: started

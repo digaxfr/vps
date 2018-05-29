@@ -1,0 +1,13 @@
+---
+- name:
+  filesystem:
+    dev: /dev/disk/by-id/scsi-0DO_Volume_vps2-home
+    fstype: ext4
+
+- name:
+  mount:
+    boot: yes
+    fstype: ext4
+    path: /home
+    src: /dev/disk/by-id/scsi-0DO_Volume_vps2-home
+    state: mounted

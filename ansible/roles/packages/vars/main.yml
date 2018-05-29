@@ -1,0 +1,8 @@
+---
+pkg_list:
+  - python
+  - libselinux-python
+  - tmux
+  - vim
+  - weechat
+  - irssi

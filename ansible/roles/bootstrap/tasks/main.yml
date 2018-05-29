@@ -1,0 +1,43 @@
+---
+- name: bootstrap | install python
+  raw: dnf -y install python libselinux-python
+
+- name: bootstrap | create local admin account
+  user:
+    append: yes
+    comment: Local admin account
+    create_home: yes
+    groups: wheel
+    home: "/var/lib/{{ admin_name }}"
+    name: "{{ admin_name }}"
+    shell: /bin/bash
+    state: present
+    uid: "{{ admin_uid }}"
+
+- name: bootstrap | ensure ssh directory exists
+  file:
+    path: "/var/lib/{{ admin_name }}/.ssh"
+    state: directory
+    owner: "{{ admin_name }}"
+    group: "{{ admin_name }}"
+    mode: 0700
+
+- name: bootstrap | copy over root ssh keys to admin account
+  copy:
+    remote_src: yes
+    src: /root/.ssh/authorized_keys
+    dest: "/var/lib/{{ admin_name }}/.ssh/authorized_keys"
+    owner: "{{ admin_name }}"
+    group: "{{ admin_name }}"
+    mode: 0600
+
+- name: bootstrap | allow wheel group sudo nopasswd
+  lineinfile:
+    path: /etc/sudoers
+    regexp: '{{ item.regexp }}'
+    line: '{{ item.line }}'
+  with_items:
+    - regexp: '%wheel  ALL=(ALL)       ALL'
+      line: '#%wheel  ALL=(ALL)       ALL'
+    - regexp: '# %wheel        ALL=(ALL)       NOPASSWD: ALL'
+      line: '%wheel        ALL=(ALL)       NOPASSWD: ALL'
