@@ -1,9 +1,11 @@
 ---
 pkg_list:
-  - python
-  - libselinux-python
-  - tmux
-  - vim
-  - weechat
-  - irssi
-  - screen
+- htop
+- irssi
+- jq
+- libselinux-python
+- python
+- screen
+- tmux
+- vim
+- weechat

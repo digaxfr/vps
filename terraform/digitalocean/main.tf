@@ -16,6 +16,14 @@ resource "digitalocean_droplet" "droplet1" {
     "20963421",
   ]
 
+  tags = [
+    "${digitalocean_tag.managed_ansible.id}",
+    "${digitalocean_tag.managed_tf.id}",
+    "${digitalocean_tag.k8s_etcd.id}",
+    "${digitalocean_tag.k8s_master.id}",
+    "${digitalocean_tag.k8s_node.id}",
+  ]
+
   volume_ids = [
     "${digitalocean_volume.droplet1_home.id}",
   ]
@@ -25,6 +33,26 @@ resource "digitalocean_volume" "droplet1_home" {
   region = "nyc1"
   name   = "vps2-home"
   size   = 25
+}
+
+resource "digitalocean_tag" "managed_ansible" {
+  name = "managed_ansible"
+}
+
+resource "digitalocean_tag" "managed_tf" {
+  name = "managed_tf"
+}
+
+resource "digitalocean_tag" "k8s_etcd" {
+  name = "k8s_etcd"
+}
+
+resource "digitalocean_tag" "k8s_master" {
+  name = "k8s_master"
+}
+
+resource "digitalocean_tag" "k8s_node" {
+  name = "k8s_node"
 }
 
 output droplet1_ipv4 {

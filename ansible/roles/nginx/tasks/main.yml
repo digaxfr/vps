@@ -1,0 +1,36 @@
+---
+- name: nginx | install nginx
+  package:
+    name: nginx
+    state: latest
+  notify: nginx | restart nginx
+
+# I really do not care about checking for existing cert because this is a personal VM
+- name: nginx | generate self-signed cert
+  command: >
+    openssl req -x509 -newkey rsa:4096 -keyout /etc/nginx/cert.key -out /etc/nginx/cert.crt -days 365 -nodes -subj '/CN={{ hostvars[inventory_hostname].ansible_default_ipv4.address }}'
+  notify: nginx | restart nginx
+
+- name: nginx | template out configs
+  template:
+    src: "{{ item.file }}.j2"
+    dest: "{{ item.dest }}"
+    owner: root
+    group: root
+    mode: 0644
+  with_items:
+  - file: nginx.conf
+    dest: /etc/nginx/nginx.conf
+  - file: ssl.conf
+    dest: /etc/nginx/conf.d/ssl.conf
+  notify: nginx | restart nginx
+
+- name: nginx | set selinux bools
+  command: >
+    setsebool -P httpd_can_network_connect 1
+
+- name: nginx | service enabled
+  service:
+    name: nginx
+    enabled: yes
+    state: started

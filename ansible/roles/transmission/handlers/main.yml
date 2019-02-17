@@ -1,0 +1,6 @@
+---
+- name: transmission | restart transmission
+  service:
+    name: transmission-daemon
+    state: restarted
+    enabled: yes

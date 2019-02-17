@@ -1,0 +1,23 @@
+---
+- name: transmission | install transmission
+  package:
+    name: transmission-daemon
+    state: latest
+  notify: transmission | restart transmission
+
+- name: transmission | create dirs
+  file:
+    path: /var/lib/transmission/.config/transmission-daemon
+    state: directory
+    owner: transmission
+    group: transmission
+    mode: 0775
+
+- name: transmission | template config
+  template:
+    src: settings.json.j2
+    dest: /var/lib/transmission/.config/transmission-daemon/settings.json
+    owner: transmission
+    group: transmission
+    mode: 0600
+  notify: transmission | restart transmission
