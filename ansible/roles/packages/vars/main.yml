@@ -1,5 +1,6 @@
 ---
 pkg_list:
+- ansible
 - htop
 - irssi
 - jq
