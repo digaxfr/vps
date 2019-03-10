@@ -10,10 +10,10 @@ server {
 
     root /var/www/;
 
-    location /btxfer {
-        autoindex on;
-        alias /var/lib/transmission/Downloads;
-    }
+#    location /btxfer {
+#        autoindex on;
+#        alias /var/lib/transmission/Downloads;
+#    }
 
     location /transmission {
         proxy_buffering off;
