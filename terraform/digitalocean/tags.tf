@@ -25,3 +25,7 @@ resource "digitalocean_tag" "k8s_node" {
 resource "digitalocean_tag" "bogus1" {
   name = "bogus1"
 }
+
+resource "digitalocean_tag" "vault" {
+  name = "vault"
+}

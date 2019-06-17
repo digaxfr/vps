@@ -5,3 +5,4 @@ ansible.log
 terraform.tfstate
 terraform.tfstate.backup
 .terraform/
+vault/digtialocean/token

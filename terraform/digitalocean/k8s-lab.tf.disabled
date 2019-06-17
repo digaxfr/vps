@@ -15,6 +15,7 @@ resource "digitalocean_droplet" "k8s-lab-01" {
     "${digitalocean_tag.managed_ansible.id}",
     "${digitalocean_tag.managed_tf.id}",
     "${digitalocean_tag.k8s_lab.id}",
+    "${digitalocean_tag.vault.id}",
   ]
 }
 
