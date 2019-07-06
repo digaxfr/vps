@@ -6,3 +6,4 @@ colorscheme elflord
 set list
 set listchars=eol:❮,tab:❯❯
 set autoindent
+syntax on
